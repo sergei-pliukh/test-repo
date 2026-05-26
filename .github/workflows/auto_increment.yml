@@ -1,0 +1,32 @@
+name: Auto Increment FW Version
+
+on:
+  push:
+    branches:
+      - main # Гитхаб использует ветку main по умолчанию
+    paths-ignore:
+      - 'fw_version.txt'
+
+permissions:
+  contents: write
+
+jobs:
+  increment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Increment Version File
+        run: |
+          RAW_HEX=$(cat fw_version.txt | tr -d ' \n\r')
+          printf "%08X" $((0x$RAW_HEX + 1)) > fw_version.txt
+          echo "Новая версия: $(cat fw_version.txt)"
+
+      - name: Commit and Push changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add fw_version.txt
+          git commit -m "chore: auto-increment fw_version [skip ci]"
+          git push origin main
