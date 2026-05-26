@@ -3,7 +3,7 @@ name: Auto Increment FW Version
 on:
   push:
     branches:
-      - main # Гитхаб использует ветку main по умолчанию
+      - main 
     paths-ignore:
       - 'fw_version.txt'
 
@@ -21,7 +21,7 @@ jobs:
         run: |
           RAW_HEX=$(cat fw_version.txt | tr -d ' \n\r')
           printf "%08X" $((0x$RAW_HEX + 1)) > fw_version.txt
-          echo "Новая версия: $(cat fw_version.txt)"
+          echo "New version: $(cat fw_version.txt)"
 
       - name: Commit and Push changes
         run: |
