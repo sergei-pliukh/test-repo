@@ -1,1 +1,1 @@
-test next 10
+test next 7
