@@ -19,7 +19,7 @@ jobs:
 
       - name: Increment Version File
         run: |
-          RAW_HEX=$(cat fw_version.txt | tr -d ' \n\r')
+          RAW=$(cat fw_version.txt | tr -d ' \n\r')
           printf "%08d" $((10#$RAW + 1)) > fw_version.txt
 
       - uses: stefanzweifel/git-auto-commit-action@v5
